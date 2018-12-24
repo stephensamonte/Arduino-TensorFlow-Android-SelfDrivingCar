@@ -14,18 +14,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity {
+
+    // This is OpenCV
+    private static final String TAG = "MainActivity";
+    static {
+        if(!OpenCVLoader.initDebug()){
+            Log.d(TAG, "OpenCV not loaded");
+        } else {
+            Log.d(TAG, "OpenCV loaded");
+        }
+    }
+
+
     public final String ACTION_USB_PERMISSION = "com.hariharan.arduinousb.USB_PERMISSION";
     Button startButton, sendButton, clearButton, stopButton;
 
@@ -37,7 +50,7 @@ public class MainActivity extends Activity {
 
     EditText durationEditText;
 
-    Button directionButton, leftButton, rightButton;
+    Button directionButton, backwardButton, forewardButton, leftButton, rightButton;
 
     UsbManager usbManager;
     UsbDevice device;
@@ -103,8 +116,6 @@ public class MainActivity extends Activity {
         ;
     };
 
-    SeekBar seekBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,35 +126,15 @@ public class MainActivity extends Activity {
         clearButton = (Button) findViewById(R.id.buttonClear);
         stopButton = (Button) findViewById(R.id.buttonStop);
 
-        seekBar = (SeekBar)findViewById(R.id.seekBar2);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // TODO Auto-generated method stub
-                speedTextView.setText(String.valueOf(progress));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-    logEditText = (EditText) findViewById(R.id.editTextLog);
+        logEditText = (EditText) findViewById(R.id.editTextLog);
         logTextView = (TextView) findViewById(R.id.textViewLog);
 
         speedTextView = (TextView) findViewById(R.id.speedTextView);
         turnTextView = (TextView) findViewById(R.id.turnTextView);
 
         directionButton = (Button) findViewById(R.id.buttonDirection);
-
+        backwardButton = (Button) findViewById(R.id.buttonSpeedDown);
+        forewardButton = (Button) findViewById(R.id.buttonSpeedUp);
         leftButton = (Button) findViewById(R.id.buttonLeftTurn);
         rightButton = (Button) findViewById(R.id.buttonRightTurn);
 
@@ -158,7 +149,7 @@ public class MainActivity extends Activity {
 
         // Sets the default Speed Value Text
         speedTextView.setText(Integer.toString(speedNumber));
-        updateTurnUItext();
+        turnTextView.setText(Integer.toString(turnNumber));
         durationEditText.setText(Integer.toString(durationNumber));
     }
 
@@ -202,9 +193,6 @@ public class MainActivity extends Activity {
     }
 
     public void onClickSend(View view) {
-
-        speedNumber = seekBar.getProgress();
-
         String data =
 //                logEditText.getText().toString() +
                 speedNumber+
@@ -257,27 +245,31 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void onClickSpeedDown(View view) {
+        if (speedNumber > 0){
+            speedNumber -= 10;
+            speedTextView.setText(Integer.toString(speedNumber));
+        }
+    }
+
+    public void onClickSpeedUp(View view) {
+        if(speedNumber < 255){
+            speedNumber += 10;
+            speedTextView.setText(Integer.toString(speedNumber));
+        }
+    }
+
     public void onClickLeft(View view) {
         if (turnNumber > 0){
             turnNumber -= 1;
+            turnTextView.setText(Integer.toString(turnNumber));
         }
-        updateTurnUItext();
     }
 
     public void onClickRight(View view) {
         if(turnNumber < 2){
             turnNumber += 1;
-        }
-        updateTurnUItext();
-    }
-
-    private void updateTurnUItext(){
-        if (turnNumber == 0){
-            turnTextView.setText("Forward");
-        } else if (turnNumber == 1) {
-            turnTextView.setText("Left");
-        } else {
-            turnTextView.setText("Right");
+            turnTextView.setText(Integer.toString(turnNumber));
         }
     }
 

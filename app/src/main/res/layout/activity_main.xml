@@ -63,7 +63,11 @@
 
     </LinearLayout>
 
-
+    <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,21 +82,30 @@
             android:textSize="18sp"
             android:text="Speed: "/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_forward_black_24dp"
+            android:rotation="180"
+            android:id="@+id/buttonSpeedDown"
+            android:onClick="onClickSpeedDown"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_margin="2dp"
-            android:text="0"
             android:id="@+id/speedTextView" />
 
-        <SeekBar
-            android:id="@+id/seekBar2"
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:max="255" />
+            android:background="@drawable/ic_forward_black_24dp"
+            android:id="@+id/buttonSpeedUp"
+            android:onClick="onClickSpeedUp"/>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -157,20 +170,12 @@
 
 
 
-    <ScrollView
-        android:id="@+id/SCROLLER_ID"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
-        android:fillViewport="true">
 
-        <!-- This is the log view-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:id="@+id/textViewLog" />
-    </ScrollView>
+    <!-- This is the log view-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/textViewLog" />
 
 </LinearLayout>
