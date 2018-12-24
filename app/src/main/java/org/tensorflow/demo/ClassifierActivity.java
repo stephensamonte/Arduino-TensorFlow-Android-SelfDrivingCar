@@ -34,7 +34,6 @@ import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.util.Log;
@@ -206,7 +205,6 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     startButton = (Button) findViewById(R.id.buttonStart);
     sendButton = (Button) findViewById(R.id.buttonSend);
     stopButton = (Button) findViewById(R.id.buttonStop);
-    showButton = (Button) findViewById(R.id.buttonShow);
 
       setUiEnabled(false);
 
@@ -331,35 +329,6 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   }
 
 
-//    private void configureTransform(final int viewWidth, final int viewHeight) {
-//        final Activity activity = this;
-//        if (null == textureView || null == previewSize || null == activity) {
-//            return;
-//        }
-//        final int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-//        final Matrix matrix = new Matrix();
-//        final RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
-//        final RectF bufferRect = new RectF(0, 0, previewSize.getHeight(), previewSize.getWidth());
-//        final float centerX = viewRect.centerX();
-//        final float centerY = viewRect.centerY();
-//        if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
-//            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
-//            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
-//            final float scale =
-//                    Math.max(
-//                            (float) viewHeight / previewSize.getHeight(),
-//                            (float) viewWidth / previewSize.getWidth());
-//            matrix.postScale(scale, scale, centerX, centerY);
-//            matrix.postRotate(90 * (rotation - 2), centerX, centerY);
-//        } else if (Surface.ROTATION_180 == rotation) {
-//            matrix.postRotate(180, centerX, centerY);
-//        }
-//        textureView.setTransform(matrix);
-//    }
-
-
-
-
   // below is arduino code
 
   UsbManager usbManager;
@@ -409,7 +378,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     }
   };
 
-  Button startButton, sendButton, stopButton, showButton;
+  Button startButton, sendButton, stopButton;
 
   public final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() { //Broadcast Receiver to automatically start and stop the Serial connection.
     @Override
@@ -456,60 +425,28 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
         stopButton.setEnabled(bool);
     }
 
-    boolean active = false;
 
   // This is arduino code
   public void onClickSend(View view) {
 
-    if (active){
-      sendButton.setText("Send");
-      active = false;
-      mhandler.removeCallbacksAndMessages(null);
-    } else {
-      sendButton.setText("Active");
-      active = true;
-      delay();
-    }
-
-  }
-
-  public void onClickStop(View view) {
-      setUiEnabled(false);
-      serialPort.close();
-  }
-
-  Handler mhandler = new Handler();
-
-  private void delay(){
-    mhandler.post(new Runnable() {
-      @Override
-      public void run() {
-        sendDataArduino(); // running this code in a delay
-        mhandler.postDelayed(this, 250); // this is the delay
-      }
-    });
-  }
-
-  private void sendDataArduino(){
-    String durationNumber = "0250";
-
     int speedNumber = 255;
     int directionNumber = 0;
-
     String turnNumber = RecognitionScoreView.getTurnDirection();
 
-
     // Training set TF left = 0, right = 1, straight = 2
-    // Arduino left = 1, right = 2,  straight = 0
+    // Arduino left = 1, right = 2,  stright = 0
     if (turnNumber.equals("0")){
-      turnNumber = "1"; // should be left
+      turnNumber = "1";
     } else if (turnNumber.equals("1")){
-      turnNumber = "2"; // should be right
+      turnNumber = "2";
     } else {
       turnNumber = "0";
     }
 
+    int durationNumber = 1000;
+
     String data =
+//                logEditText.getText().toString() +
             speedNumber+
                     ":" +
                     directionNumber +
@@ -519,20 +456,14 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                     durationNumber; // Duration
     serialPort.write(data.getBytes());
 //    tvAppend(logTextView, "\nData Sent : " + data + "\n");
+
+    Toast.makeText(this, "Sent: " + data, Toast.LENGTH_LONG).show();
   }
 
-  @Override
-  public synchronized void onStop() {
-    super.onStop();
-
-    // this is to stop the handler
-    sendButton.setText("Send");
-    active = false;
-    mhandler.removeCallbacksAndMessages(null);
+  public void onClickStop(View view) {
+      setUiEnabled(false);
+      serialPort.close();
   }
 
-  public void onClickShow (View view){
-    Toast.makeText(this, "Sent: " + RecognitionScoreView.getTurnDirection(), Toast.LENGTH_LONG).show();
-  }
 
 }

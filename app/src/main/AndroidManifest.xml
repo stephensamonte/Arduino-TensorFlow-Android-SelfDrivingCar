@@ -26,11 +26,11 @@
     <application android:allowBackup="true"
         android:debuggable="true"
         android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:theme="@style/MaterialTheme">
 
         <activity android:name="org.tensorflow.demo.ClassifierActivity"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="portrait"
                   android:label="@string/activity_name_classification">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,5 @@
             </intent-filter>
         </activity>
     </application>
-
-
 
 </manifest>
