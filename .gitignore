@@ -1,7 +1,26 @@
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+# Temporary files
+*~
+\#*#
+
+# Android binary
+*.apk
+
+# hprof captures
+captures/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file
+local.properties
+
+# IntelliJ
+*.iml
+.idea/
+
+# OSX files
 .DS_Store
-/build
-/captures
+
+# Windows files
+Thumbs.db

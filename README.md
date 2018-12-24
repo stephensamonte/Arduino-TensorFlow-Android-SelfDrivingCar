@@ -10,3 +10,20 @@ Side note:
 - I uploaded this project which I abandoned 2 years ago. I started this project December 2016 and abandoned it May 2017. I learned a lot from it.
 
 
+
+The Base of the Project was adapted from a Tensorflow Image Recognition Android Applicaiton: 
+# TensorFlow (1.0.1) Image Classifier Gradle Standalone Port
+
+- Clone the project
+- Import it on Android Studio
+- Run it
+- That's all.
+
+This project is a way to get started with TensorFlow Image Classifier quickly.
+
+I am not planning to maintain it. If you want an updated version, build it yourself.
+
+(Hints on how to do it on this [blog post][blog-post])
+
+[blog-post]: http://nilhcem.com/android/custom-tensorflow-classifier
+
