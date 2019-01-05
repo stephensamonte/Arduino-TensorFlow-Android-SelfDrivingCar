@@ -1,4 +1,4 @@
-# Arduino-OpenCV-Windows-SelfDrivingCar
+# Arduino-TensorFlow-Android-SelfDrivingCar
 
 This is a bit of a hectic project that I did in the past. 
 
