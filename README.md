@@ -14,7 +14,7 @@ Side note:
 
 
 # The Base of the Project was adapted from a Tensorflow Image Recognition Android Applicaiton: 
-- Cloned from the Tensor Flow Demo Classification Andorid Project: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples
+- Cloned from the Tensor Flow Demo Classification Andorid Project: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android
 
 # Link Referenced: 
 http://nilhcem.com/android/custom-tensorflow-classifier
