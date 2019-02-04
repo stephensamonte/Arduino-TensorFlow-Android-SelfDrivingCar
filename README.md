@@ -11,7 +11,10 @@ I did not have success in using OpenCV's classifier. I got so frustrated that I 
 Side note: 
 - I uploaded this project which I abandoned 2 years ago. I started this project December 2016 and abandoned it May 2017. I learned a lot from it.
 
-
+# Journal
+- 2017_03_19_23_16_17 [Showcase](https://www.youtube.com/watch?v=TwgRMI5cnf4)
+- 2017 03 19 23 15 24 [Showcase](https://www.youtube.com/watch?v=LhU2R0o4xfg&feature=youtu.be)
+- 2017_03_19_23_15_24 [Showcase](https://www.youtube.com/watch?v=RQpLlQxHpc0&feature=youtu.be)
 
 # The Base of the Project was adapted from a Tensorflow Image Recognition Android Applicaiton: 
 - Cloned from the Tensor Flow Demo Classification Andorid Project: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android
